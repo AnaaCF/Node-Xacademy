@@ -39,20 +39,22 @@ const upDataUser = async (userid,userOptions ) => {
     }
 }
 
-const getUsers = async() => {
-    try{
-        const allUsers = await User.findAll({
-            attributes: ['id','userName','nombre','apellido','email','password','estado']
-        });
-        if(allUsers.length === 0){
-            return error;   
-        }else{
-            return allUsers;
-        }
-    }catch(error){
-        throw error;
+const getUsers = async (criteria) => {
+    try {
+      let options = { include: [{ all: true }] };
+      if (criteria) {
+        options = { ...options, where: { [Op.or]: criteria } };
+      }
+      const users = await User.findAll(options);
+      if(users.length === 0){
+        throw new Error("No se encontraron usuarios con ese criterio de busqueda");
+      }else{
+        return users;      
+        } 
+    } catch (error) {
+      throw error;
     }
-}
+  };
 
 const validateUser = async (userName, password) => {
     try {

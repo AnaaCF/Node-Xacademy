@@ -12,10 +12,9 @@ const creatLibrary = async (libraryOptions) => {
 }
 
 const getLibrary = async (libraryId) => {
-    
     try{
-       
         const library = await Library.findByPk(libraryId, { include: [{ all: true }] });
+        console.log(`Logitud de libreria  --->  ${library.length}`)
         if(library){
             if( library.estado === "EXISTENTE"){
                 return library;

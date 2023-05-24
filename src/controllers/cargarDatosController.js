@@ -58,7 +58,7 @@ const crearBook = async (req, res) => {
     
   const crearUser = async (req, res) => {
     try {
-      const fileContent = readFileSync('./archivos_CSV/usuario.csv', 'utf-8');
+      const fileContent = readFileSync('./archivos_CSV/usuarios.csv', 'utf-8');
   
       parse(fileContent, {
         columns: true,

@@ -33,12 +33,22 @@ const putUser = async(req,res) => {
         res.status(500).json({message: error.message});
     } 
 }
-const getUsers = async (req,res) => {
-    try{
-        const allUsers = await userService.getUsers();
-        res.status(200).json(allUsers);
-    }catch(error){
-        res.status(404).json({message: "No se encontraron usuarios"});
+const getUsers =async (req, res) => {
+    const { userName, email, estado } = req.query;
+    try {
+      let users;
+      if (Object.keys(req.query).length !== 0) {
+        users = await userService.getUsers({
+          ...(userName && { userName }),
+          ...(email && { email }),
+          ...(estado && { estado }),
+        });
+      } else {
+        users = await userService.getUsers();
+      }
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
 }
 

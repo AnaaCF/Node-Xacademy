@@ -8,8 +8,8 @@ const getUser = async (userId) => {
 const upDateUser = async (userId,userOptions)=>{
     return await userProvider.upDataUser(userId,userOptions);
 }
-const getUsers = async () => {
-    return await userProvider.getUsers();
+const getUsers = async (options) => {
+    return await userProvider.getUsers(options);
 }
 
 module.exports = {creatUser,getUser, upDateUser,getUsers};

@@ -35,7 +35,7 @@ const putBook = async (req,res) => {
     } 
 }
 const getBooks =async (req, res) => {
-    const { titulo, autor, isbn, library } = req.query;
+    const { titulo, autor, isbn, library, estado } = req.query;
     try {
       let books;
       if (Object.keys(req.query).length !== 0) {
@@ -44,6 +44,7 @@ const getBooks =async (req, res) => {
           ...(autor && { autor }),
           ...(isbn && { isbn }),
           ...(library && { library }),
+          ...(estado && { estado }),
         });
       } else {
         books = await bookService.getBooks();

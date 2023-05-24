@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use('/library', authMiddleware, libraryRouter);
 
-app.use('/user', authMiddleware, authIsAdmin, userRouter);
+app.use('/user', userRouter);
 
 app.use('/book', authMiddleware, bookRouter);
 
