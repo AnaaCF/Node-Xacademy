@@ -1,4 +1,5 @@
 const {bookService} = require('../services')
+const express = require("express");
 
 const postBook = async (req,res) => {
     const {isbn, titulo, autor, year, library} = req.body;  
@@ -33,12 +34,23 @@ const putBook = async (req,res) => {
         res.status(500).json({ message: error.message });
     } 
 }
-const getBooks = async (req,res)=> {
-    try{
-        const allBooks = await bookService.getBooks();
-        res.status(200).json(allBooks);
-    }catch(error){
-        res.status(404)
+const getBooks =async (req, res) => {
+    const { titulo, autor, isbn, library } = req.query;
+    try {
+      let books;
+      if (Object.keys(req.query).length !== 0) {
+        books = await bookService.getBooks({
+          ...(titulo && { titulo }),
+          ...(autor && { autor }),
+          ...(isbn && { isbn }),
+          ...(library && { library }),
+        });
+      } else {
+        books = await bookService.getBooks();
+      }
+      res.status(200).json(books);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
 }
 const deleteBook = async (req,res) => {
@@ -52,4 +64,14 @@ const deleteBook = async (req,res) => {
     } 
 }
 
-module.exports = {postBook, getBook, putBook, getBooks,deleteBook};
+// const getSomeBooks = async (req, res) => {
+//     const { titulo, isbn } = req.query;
+
+//     try{
+//         const books = await bookService.getSomeBooks({ titulo, isbn });
+//         res.status(200).json(books);
+//     }catch(error){
+//         res.status(404).json({message: error.message})
+//     }
+//   }
+module.exports = {postBook, getBook, putBook, getBooks, deleteBook};

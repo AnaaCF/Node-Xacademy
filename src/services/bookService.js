@@ -9,11 +9,14 @@ const getBook = async(id) => {
 const upDataBook = async(id,bookOptions) => {
     return await bookProvider.upDataBook(id,bookOptions);
 }
-const getBooks = async() => {
-    return await bookProvider.getBooks();
+const getBooks = async(options) => {
+    return await bookProvider.getBooks(options);
 }
 const deleteLogBook = async(id) => {
     return await bookProvider.deleteLogBook(id);
 }
+// const getSomeBooks = async(options) => {
+//     return await bookProvider.getSomeBooks(options);
+// }
 
-module.exports = {creatBook, getBook, upDataBook, getBooks,deleteLogBook};
+module.exports = {creatBook, getBook, upDataBook, getBooks, deleteLogBook};

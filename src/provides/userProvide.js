@@ -44,7 +44,11 @@ const getUsers = async() => {
         const allUsers = await User.findAll({
             attributes: ['id','userName','nombre','apellido','email','password','estado']
         });
-        return allUsers;
+        if(allUsers.length === 0){
+            return error;   
+        }else{
+            return allUsers;
+        }
     }catch(error){
         throw error;
     }

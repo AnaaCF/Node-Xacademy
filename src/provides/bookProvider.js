@@ -14,7 +14,7 @@ const creatBook = async (bookOptions) => {
 
 const getBook = async (id) => {
     try{
-        const book = await Book.findByPk(id);
+        const book = await Book.findByPk(id, {include: [{ all: true }]});
         
         if(book){
             if(book.estado === "EXISTENTE"){
@@ -43,15 +43,21 @@ const upDataBook = async (bookId, bookOptions) => {
     }
 }
 
-const getBooks = async() => {
-    try{
-        const allBooks = await Book.findAll({
-            attributes: ['id','titulo','libraryId','estado'
-        ]});
-        return allBooks;
-    }catch(error){
-        throw error;
+const getBooks = async (criteria) => {
+    try {
+      let options = { include: [{ all: true }] };
+      if (criteria) {
+        options = { ...options, where: { [Op.or]: criteria } };
+      }
+      const books = await Book.findAll(options);
+      if(books.length === 0){
+        throw new Error("No se encontraron libros con ese criterio de busqueda");
+      }else{ 
+        return books;
+        } 
+    } catch (error) {
+      throw error;
     }
-} 
+  };
 
-module.exports = {creatBook,getBook, upDataBook, getBooks};
+module.exports = {creatBook,getBook, upDataBook,getBooks};

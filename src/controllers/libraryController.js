@@ -13,8 +13,8 @@ const postLibrary = async (req,res) => {
 const getLibrary = async (req,res) => {
     const libraryId = req.params.id;
     try{
-        const library = await libraryService.getLibrary(libraryId);
-        res.status(200).json(library);
+        const getLibrary = await libraryService.getLibrary(libraryId);
+        res.status(200).json(getLibrary);
     }catch(error){
         res.status(404).json({ massege: error.massege});
     }
@@ -30,14 +30,33 @@ const putlibrary = async (req,res) => {
         res.status(500).json({ message: error.message });
     } 
 }
-const getLibraries = async (req,res)=> {
-    try{
-        const allLibraries = await libraryService.getLibraries();
-        res.status(200).json(allLibraries);
-    }catch(error){
-        res.status(404)
+
+const getLibraries =async (req, res) => {
+    const { name, location, estado } = req.query;
+    try {
+      let libraries;
+      if (Object.keys(req.query).length !== 0) {
+        libraries = await libraryService.getLibraries({
+          ...(name && { name }),
+          ...(location && { location }),
+          ...(estado && { estado }),
+        });
+      } else {
+        libraries = await libraryService.getLibraries();
+      }
+      res.status(200).json(libraries);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
 }
+// const getLibraries = async (req,res)=> {
+//     try{
+//         const allLibraries = await libraryService.getLibraries();
+//         res.status(200).json(allLibraries);
+//     }catch(error){
+//         res.status(404).json({message: "No se encontraron librerias"})
+//     }
+// }
 const deleteLibrary = async (req,res) => {
     const LibraryId = req.params.id;
     const {estado}={estado: "ELIMINADO"}

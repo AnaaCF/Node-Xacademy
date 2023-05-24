@@ -38,7 +38,7 @@ const getUsers = async (req,res) => {
         const allUsers = await userService.getUsers();
         res.status(200).json(allUsers);
     }catch(error){
-        res.status(404)
+        res.status(404).json({message: "No se encontraron usuarios"});
     }
 }
 

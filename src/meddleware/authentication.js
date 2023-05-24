@@ -24,7 +24,7 @@ const authIsAdmin = (req, res, next) => {
   if (req.isAuthenticated() && req.user.role === "Admin") {
     return next();
   }
-  res.status(401).json({ error: "Usuario no es Admin" });
+  res.status(401).json({ error: "El usuario no es Admin" });
 };
 
 module.exports = { secret, authMiddleware, authIsAdmin };

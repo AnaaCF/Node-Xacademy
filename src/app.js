@@ -1,9 +1,9 @@
 const express = require('express');
 const {initializeDB,sequelize} = require('./config/dbCofing')
 const app = express();
-const {userRouter, libraryRouter, bookRouter, login} = require('./routes');
+const {userRouter, libraryRouter, bookRouter, login, cargarDtados} = require('./routes');
 const {authMiddleware, authIsAdmin} = require('./meddleware')
-const PORT = 8080;
+const PORT = 8090;
 
 app.use(express.json());
 
@@ -14,7 +14,9 @@ app.use('/user', authMiddleware, authIsAdmin, userRouter);
 
 app.use('/book', authMiddleware, bookRouter);
 
-app.use('/login',login);
+app.use('/login', login);
+
+app.use('/crear',authMiddleware,cargarDtados);
 
 app.listen(PORT, async ()=>{
     await initializeDB();

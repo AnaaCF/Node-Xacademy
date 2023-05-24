@@ -9,8 +9,8 @@ const getLibrary = async (LibraryId) => {
 const upDataLibrary = async (id,libraryOptions) =>{
     return await libraryProvider.upDataLibrary(id,libraryOptions);
 }
-const getLibraries = async () => {
-    return await libraryProvider.getLibraries();
+const getLibraries = async (options) => {
+    return await libraryProvider.getLibraries(options);
 }
 
 module.exports = {creatLibrary, getLibrary, upDataLibrary, getLibraries};
