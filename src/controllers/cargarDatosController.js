@@ -13,6 +13,7 @@ const crearBook = async (req, res) => {
         delimiter: ';',
       }, async (error, archivo) => {
         if (error) {
+          console.log(`ERROR ${error}`);
           res.status(500).json({ message: 'Error al analizar el archivo CSV' });
           return;
         } 
@@ -20,6 +21,7 @@ const crearBook = async (req, res) => {
           await Book.bulkCreate(archivo);
           res.status(200).json({ message: 'Se cargaron todos los libros' });
         } catch (error) {
+          console.log(`ERROR ${error}`);
           res.status(500).json({ message: 'Error al cargar los datos en la base de datos' });
         }
       });
@@ -39,18 +41,21 @@ const crearBook = async (req, res) => {
         delimiter: ';',
       }, async (error, archivo) => {
         if (error) {
-          res.status(500).json({ message: `Error al ver el archivo: ${error}` });
+          console.log(`ERROR ${error}`);
+          res.status(500).json({ message: `Error al ver el archivo` });
           return;
         } 
         try {
           await Library.bulkCreate(archivo);
           res.status(200).json({ message: 'Se cargaron todas las librerías' });
         } catch (error) {
-          res.status(500).json({ message: `Error al cargar las librerías: ${error}`});
+          console.log(`ERROR ${error}`);
+          res.status(500).json({ message: `Error al cargar las librerías`});
         }
       });
     } catch (error) {
-      res.status(500).json({ message: `Error al ver el archivo: ${error}` });
+      console.log(`ERROR ${error}`);
+      res.status(500).json({ message: `Error al ver el archivo` });
     }
   };
 
@@ -66,18 +71,21 @@ const crearBook = async (req, res) => {
         delimiter: ';',
       }, async (error, archivo) => {
         if (error) {
-          res.status(500).json({ message: `Error al ver el archivo: ${error}` });
+          console.log(`ERROR ${error}`);
+          res.status(500).json({ message: `Error al ver el archivo` });
           return;
         } 
         try {
           await User.bulkCreate(archivo);
           res.status(200).json({ message: 'Se cargaron todos los usuarios' });
         } catch (error) {
-          res.status(500).json({ message: `Error al cargar los usuarios: ${error}`});
+          console.log(`ERROR ${error}`);
+          res.status(500).json({ message: `Error al cargar los usuarios`});
         }
       });
     } catch (error) {
-      res.status(500).json({ message: `Error al ver el archivo: ${error}` });
+      console.log(`ERROR ${error}`);
+      res.status(500).json({ message: `Error al ver el archivo` });
     }
   };
   

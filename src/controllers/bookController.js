@@ -65,14 +65,5 @@ const deleteBook = async (req,res) => {
     } 
 }
 
-// const getSomeBooks = async (req, res) => {
-//     const { titulo, isbn } = req.query;
 
-//     try{
-//         const books = await bookService.getSomeBooks({ titulo, isbn });
-//         res.status(200).json(books);
-//     }catch(error){
-//         res.status(404).json({message: error.message})
-//     }
-//   }
 module.exports = {postBook, getBook, putBook, getBooks, deleteBook};
